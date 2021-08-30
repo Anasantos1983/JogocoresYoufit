@@ -1,0 +1,153 @@
+<html>
+  <head>
+  <title>Jogo de Cores</title>
+  <style>
+    td {
+	width:150px;height:150px;
+    }
+    .vermelho {
+	background-color:#610B0B;
+    }
+    .verde {
+	background-color:#0B3B0B;
+    }
+    .amarelo {
+	background-color:#AEB404;
+    }
+    .azul {
+	background-color:#0B2161;
+    }
+    .vermelho-claro {
+	background-color:#FF0000;
+    }
+    .verde-claro {
+	background-color:#2EFE2E;
+    }
+    .amarelo-claro {
+	background-color:#FFFF00;
+    }
+    .azul-claro {
+	background-color:#2E64FE;
+    }
+    .cinza {
+	background-color:#151515;
+    }
+  </style>
+  </head>
+  <body>
+	<table>
+	  <tr>
+	     <td class="vermelho p1"></td>
+	     <td class="verde p1"></td>
+	  </tr>
+	  <tr>
+	     <td class="amarelo p3"></td>
+	     <td class="azul p4"></td>
+	  </tr>
+	</table>
+  <script>
+    var sequencia = [];
+        sequencia[0] = [0,2,0,1,3];
+        sequencia[1] = [0,1,0,3,2];
+    var comeco = -1;
+    var posicao = 1;
+    var habilitar = 0;
+
+    var p1 = document.getElementsByTagName("td")[0];
+    p1.addEventListener("click",function(e){
+       if(habilitar==1){ p1.className = "vermelho-claro"; validar("0"); }
+    },false);
+    var p2 = document.getElementsByTagName("td")[1];
+    p2.addEventListener("click",function(e){
+       if(habilitar==1){ p2.className = "verde-claro"; validar("1"); }
+    },false);
+
+    var p3 = document.getElementsByTagName("td")[2];
+    p3.addEventListener("click",function(e){
+       if(habilitar==1){ p3.className = "amarelo-claro"; validar("2"); }
+    },false);
+
+    var p4 = document.getElementsByTagName("td")[3];
+    p4.addEventListener("click",function(e){
+       if(habilitar==1){ p4.className = "azul-claro"; validar("3"); }
+    },false);
+
+    setTimeout(function(){
+       p1.className = "vermelho-claro";
+       p2.className = "verde-claro";
+       p3.className = "amarelo-claro";
+       p4.className = "azul-claro";
+    },1000);
+
+      limpar();
+      game();
+
+function limpar(){
+    setTimeout(function(){
+       p1.className = "vermelho";
+       p2.className = "verde";
+       p3.className = "amarelo";
+       p4.className = "azul";
+    },2000);
+}
+
+function game(){
+    comeco = comeco+1;
+    var contador = -1;
+    var gamestart = setInterval(function(){
+    contador=contador+1;
+   
+   if(comeco == 2){
+     p1.className = "verde-claro";
+     p2.className = "verde-claro";
+     p3.className = "verde-claro";
+     p4.className = "verde-claro";
+     alert("Parabens! Você é o maximo.");
+     comeco = -1;
+     habilitar = 0;
+     return false;
+   }
+
+    if(contador == 4){
+	clearInterval(gamestart);
+        limpar();
+        habilitar = 1;
+    }
+    if(sequencia[comeco][contador].toString()=="0".toString()){
+       p1.className = "vermelho-claro";
+    }
+    if(sequencia[comeco][contador].toString()=="1".toString()){
+       p2.className = "verde-claro";
+    }
+    if(sequencia[comeco][contador].toString()=="2".toString()){
+       p3.className = "amarelo-claro";
+    }
+    if(sequencia[comeco][contador].toString()=="3".toString()){
+       p4.className = "azul-claro";
+    } 
+    },1000);
+}
+
+function validar(id){
+if(sequencia[comeco][posicao].toString()!=id.toString()){
+   p1.className = "cinza";
+   p2.className = "cinza";
+   p3.className = "cinza";
+   p4.className = "cinza";
+   habilitar = 0;
+   alert("Você Perdeu! Tente Novamente.");
+} else {
+   posicao = posicao+1;
+}
+if(posicao>4){
+  habilitar = 0;
+  posicao = 1;
+  limpar();
+  game();
+}
+
+}
+
+  </script>
+  </body>
+</html>
